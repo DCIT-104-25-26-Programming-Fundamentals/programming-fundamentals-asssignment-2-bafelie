@@ -47,6 +47,8 @@
 // =============================================================================
 
 #include <iostream>
+#include <iomanip>
+#include <vector>
 using namespace std;
 int calculateSum(int arr[], int n) {
     int sum = 0;
