@@ -75,8 +75,99 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+
 #include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
 
+void displayMenu() {
+    cout << "\n============================\n";
+    cout << "     TO-DO LIST MENU\n";
+    cout << "============================\n";
+    cout << "1. Add task\n";
+    cout << "2. View tasks\n";
+    cout << "3. Delete task\n";
+    cout << "4. Quit\n";
+    cout << "Enter your choice (1-4): ";
+}
+
+
+void addTask(vector<string>& tasks) {
+    cin.ignore(); // clear leftover newline from previous cin >>
+    string task;
+
+    cout << "Enter task: ";
+    getline(cin, task);
+
+    tasks.push_back(task);
+    cout << "Task added: \"" << task << "\"" << endl;
+}
+
+
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty. Add a task to get started!" << endl;
+        return;
+    }
+
+    cout << "Your Tasks:" << endl;
+    for (int i = 0; i < tasks.size(); i++) {
+        cout << (i + 1) << ". " << tasks[i] << endl;
+    }
+}
+
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty. Nothing to delete." << endl;
+        return;
+    }
+
+    viewTasks(tasks);
+
+    int taskNum;
+    cout << "Enter task number to delete: ";
+    cin >> taskNum;
+
+    if (taskNum < 1 || taskNum > tasks.size()) {
+        cout << "Error: Invalid task number." << endl;
+        return;
+    }
+
+    string removed = tasks[taskNum - 1];
+    tasks.erase(tasks.begin() + (taskNum - 1));
+
+    cout << "Task \"" << removed << "\" has been removed." << endl;
+}
+
+int main() {
+    vector<string> tasks;
+    int choice;
+    bool running = true;
+
+    while (running) {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                cout << "Goodbye!" << endl;
+                running = false;
+                break;
+            default:
+                cout << "Error: Invalid choice. Please enter 1-4." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}

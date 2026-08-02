@@ -71,5 +71,149 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <limits>
+
 using namespace std;
 
+
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+
+bool divide(double a, double b, double &result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a / b;
+    return true;
+}
+
+
+bool calcModulus(int a, int b, int &result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a % b;
+    return true;
+}
+
+double power(double base, double exp) {
+    return pow(base, exp);
+}
+
+void clearInput() {
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+
+int main() {
+    int choice = 0;
+
+    while (true) {
+        
+        cout << "====================================\n";
+        cout << "         SIMPLE CALCULATOR          \n";
+        cout << "====================================\n";
+        cout << "1. Addition\n";
+        cout << "2. Subtraction\n";
+        cout << "3. Multiplication\n";
+        cout << "4. Division\n";
+        cout << "5. Modulus\n";
+        cout << "6. Exponentiation\n";
+        cout << "7. Quit\n";
+        cout << "\nSelect an operation (1-7): ";
+
+        cin >> choice;
+
+        
+        if (cin.fail()) {
+            clearInput();
+            cout << "Invalid choice. Please enter a number between 1 and 7.\n\n";
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!\n";
+            break;
+        }
+        
+        if (choice < 1 || choice > 7) {
+            cout << "Invalid choice. Please enter a number between 1 and 7.\n\n";
+            continue;
+        }
+
+        if (choice == 5) {
+            int num1, num2, result;
+            cout << "Enter first number: ";
+            while (!(cin >> num1)) {
+                clearInput();
+                cout << "Invalid input. Enter an integer: ";
+            }
+
+            cout << "Enter second number: ";
+            while (!(cin >> num2)) {
+                clearInput();
+                cout << "Invalid input. Enter an integer: ";
+            }
+
+            if (calcModulus(num1, num2, result)) {
+                cout << "Result: " << num1 << " % " << num2 << " = " << result << "\n\n";
+            } else {
+                cout << "Error: Cannot perform modulus by zero.\n\n";
+            }
+        } else {
+            double num1, num2;
+
+            cout << "Enter first number: ";
+            while (!(cin >> num1)) {
+                clearInput();
+                cout << "Invalid input. Enter a valid number: ";
+            }
+
+            cout << "Enter second number: ";
+            while (!(cin >> num2)) {
+                clearInput();
+                cout << "Invalid input. Enter a valid number: ";
+            }
+
+            switch (choice) {
+                case 1:
+                    cout << "Result: " << num1 << " + " << num2 << " = " << add(num1, num2) << "\n\n";
+                    break;
+                case 2:
+                    cout << "Result: " << num1 << " - " << num2 << " = " << subtract(num1, num2) << "\n\n";
+                    break;
+                case 3:
+                    cout << "Result: " << num1 << " * " << num2 << " = " << multiply(num1, num2) << "\n\n";
+                    break;
+                case 4: {
+                    double result;
+                    if (divide(num1, num2, result)) {
+                        cout << fixed << setprecision(2);
+                        cout << "Result: " << num1 << " / " << num2 << " = " << result << "\n\n";
+                        cout << defaultfloat; 
+                    } else {
+                        cout << "Error: Cannot divide by zero.\n\n";
+                    }
+                    break;
+                }
+                case 6:
+                    cout << "Result: " << num1 << " ** " << num2 << " = " << power(num1, num2) << "\n\n";
+                    break;
+            }
+        }
+    }
+
+    return 0;
+
+}
